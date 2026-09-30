@@ -1,4 +1,5 @@
 import config from "@/config/enviroments";
+import WhatsAppButton from "@/components/WppButton";
 
 export default function Home() {
   return (
@@ -14,8 +15,9 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Solicitar turno
         </a>
+
+        <WhatsAppButton />
       </section>
 
       <section id="servicios">

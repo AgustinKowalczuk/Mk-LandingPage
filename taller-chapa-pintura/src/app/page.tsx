@@ -1,3 +1,5 @@
+import config from "@/config/enviroments";
+
 export default function Home() {
   return (
     <main>
@@ -8,7 +10,7 @@ export default function Home() {
         </p>
 
         <a
-          href="https://wa.me/549XXXXXXXXXX"
+          href={`https://wa.me/${config.NEXT_PUBLIC_WORKSHOP_PHONE}?text=${config.NEXT_PUBLIC_MESSAGE_WHATSAPP}`}
           target="_blank"
           rel="noopener noreferrer"
         >

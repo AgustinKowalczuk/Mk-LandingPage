@@ -1,3 +1,6 @@
+import config from "@/config/enviroments";
+import WhatsAppButton from "@/components/WppButton";
+
 export default function Home() {
   return (
     <main>
@@ -8,12 +11,13 @@ export default function Home() {
         </p>
 
         <a
-          href="https://wa.me/549XXXXXXXXXX"
+          href={`https://wa.me/${config.NEXT_PUBLIC_WORKSHOP_PHONE}?text=${config.NEXT_PUBLIC_MESSAGE_WHATSAPP}`}
           target="_blank"
           rel="noopener noreferrer"
         >
-          Solicitar turno
         </a>
+
+        <WhatsAppButton />
       </section>
 
       <section id="servicios">

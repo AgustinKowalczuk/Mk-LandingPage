@@ -7,9 +7,11 @@ import Link from "next/link";
 export default function Navbar({
   isOpen,
   setIsOpen,
+  setNavigateTo,
 }: {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
+  setNavigateTo: Dispatch<SetStateAction<string>>;
 }) {
   const [activeLink, setActiveLink] = useState(usePathname() || "/");
 
@@ -22,18 +24,24 @@ export default function Navbar({
 
   const navigateTo = (href: string) => {
     setActiveLink(href);
+    setNavigateTo(href);
     // setIsOpen(false);
-  }
+  };
 
   return (
     <nav className="bg-gray-100 flex flex-col sm:flex-row justify-between items-center w-full">
-
       {/* LOGO */}
       <section className="p-3 rounded-md flex items-center justify-between w-full sm:w-auto">
-        <Link href="/" className="flex items-center md:gap-5 lg:w-xl ">
-          <h1 className="text-xl text-gray-700 font-bold sm:hidden">
-            MK Cars
-          </h1>
+        <Link
+          href="/"
+          className="flex items-center md:gap-5 lg:w-xl "
+          onClick={() => {
+            setActiveLink("/");
+            setNavigateTo("/");
+            navigateTo("/");
+          }}
+        >
+          <h1 className="text-xl text-gray-700 font-bold sm:hidden">MK Cars</h1>
 
           <img
             src="/icons/Logo.jpg"

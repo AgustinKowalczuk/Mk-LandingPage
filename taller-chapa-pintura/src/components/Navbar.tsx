@@ -29,7 +29,7 @@ export default function Navbar({
   };
 
   return (
-    <nav className="bg-gray-100 flex flex-col sm:flex-row justify-between items-center w-full">
+    <nav className="bg-gray-800 flex flex-col sm:flex-row justify-between items-center w-full">
       {/* LOGO */}
       <section className="p-3 rounded-md flex items-center justify-between w-full sm:w-auto">
         <Link
@@ -41,7 +41,7 @@ export default function Navbar({
             navigateTo("/");
           }}
         >
-          <h1 className="text-xl text-gray-700 font-bold sm:hidden">MK Cars</h1>
+          <h1 className="text-xl text-amber-50 font-bold sm:hidden">MK Cars</h1>
 
           <img
             src="/icons/Logo.jpg"
@@ -49,7 +49,7 @@ export default function Navbar({
             className="w-24 h-24 rounded-2xl sm:block hidden"
           />
 
-          <h2 className="sm:block hidden text-gray-700 text-3xl font-bold">
+          <h2 className="sm:block hidden text-amber-50 text-3xl font-bold">
             MK Cars
           </h2>
         </Link>
@@ -94,7 +94,7 @@ export default function Navbar({
                 className={`block px-4 py-2 transition-all duration-300 ${
                   isActive
                     ? "text-yellow-500 font-semibold border-b-2 border-yellow-500"
-                    : "text-gray-600 hover:text-yellow-500"
+                    : "text-amber-50 hover:text-yellow-500"
                 }`}
               >
                 {link.name}

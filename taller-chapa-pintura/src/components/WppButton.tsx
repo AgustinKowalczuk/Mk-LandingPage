@@ -11,7 +11,7 @@ export default function WhatsAppButton() {
       target="_blank"
       rel="noopener noreferrer"
     >
-        <button className="fixed bottom-4 right-4 bg-green-500 text-white p-1 rounded-full shadow-lg hover:bg-green-600 hover:scale-110 transition-transform">
+        <button className="fixed sm:bottom-4 bottom-23 right-4 bg-green-500 text-white p-1 rounded-full shadow-lg hover:bg-green-600 hover:scale-110 transition-transform">
             <img src="https://cdn-icons-png.flaticon.com/512/12635/12635043.png" alt="WhatsApp" className="w-10 h-10" />
         </button>
     </a>

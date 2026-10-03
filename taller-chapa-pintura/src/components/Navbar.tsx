@@ -29,7 +29,7 @@ export default function Navbar({
   };
 
   return (
-    <nav className="bg-gray-800 flex flex-col sm:flex-row justify-between items-center w-full">
+    <nav className="bg-black/30 backdrop-blur-sm border border-white/20 rounded-xl shadow-lg flex flex-col sm:flex-row justify-between items-center w-full">
       {/* LOGO */}
       <section className="p-3 rounded-md flex items-center justify-between w-full sm:w-auto">
         <Link
@@ -56,7 +56,7 @@ export default function Navbar({
 
         {/* MOBILE MENU */}
         <button
-          className="sm:hidden text-gray-700 p-2"
+          className="sm:hidden text-amber-50 p-2"
           onClick={() => setIsOpen(!isOpen)}
         >
           <svg

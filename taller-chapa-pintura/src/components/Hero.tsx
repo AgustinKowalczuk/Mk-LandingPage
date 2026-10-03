@@ -2,7 +2,7 @@ const ilustrativeImg = "/images/hero/hero-car.jpg";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-[calc(100vh-96px)] overflow-hidden bg-gray-950">
+    <section className="relative min-h-[calc(100vh-96px)] overflow-hidden bg-gray-950 sm:pt-15">
       
       <div className="absolute inset-0">
         <img

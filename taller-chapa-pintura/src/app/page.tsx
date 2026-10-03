@@ -13,7 +13,7 @@ export default function Home() {
   const [scrollY, setScrollY] = useState(0);
 
   const heroOpacity = Math.max(0, 1 - scrollY / 500);
-  const heroTranslate = Math.min(scrollY * 0.3, 150);
+  const heroTranslate = Math.min(scrollY * 0.5, 150);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,9 +55,9 @@ export default function Home() {
       </div>
       {renderContent(navigateTo)}
 
-      <Footer />
-
       <WhatsAppButton />
+
+      <Footer />
     </main>
   );
 }

@@ -29,7 +29,7 @@ export default function Navbar({
   };
 
   return (
-    <nav className="bg-black/30 backdrop-blur-sm border border-white/20 rounded-xl shadow-lg flex flex-col sm:flex-row justify-between items-center w-full">
+    <nav className="bg-black flex flex-col sm:flex-row justify-between items-center w-full">
       {/* LOGO */}
       <section className="p-3 rounded-md flex items-center justify-between w-full sm:w-auto">
         <Link
@@ -46,7 +46,7 @@ export default function Navbar({
           <img
             src="/icons/Logo.jpg"
             alt="Logo"
-            className="w-24 h-24 rounded-2xl sm:block hidden"
+            className="w-20 h-20 rounded-2xl sm:block hidden"
           />
 
           <h2 className="sm:block hidden text-amber-50 text-3xl font-bold">

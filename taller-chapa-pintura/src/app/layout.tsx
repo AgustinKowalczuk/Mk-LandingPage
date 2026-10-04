@@ -14,7 +14,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Mk-Cars",
-  description: "Taller de chapa y pintura especializado en reparación y mantenimiento de vehículos.",
+  description:
+    "Taller de chapa y pintura especializado en reparación y mantenimiento de vehículos.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

@@ -8,7 +8,7 @@ const About = () => {
             <img
               src="/images/hero/hero-car.jpg"
               alt="Taller de chapa y pintura"
-              className="w-full aspect-[4/3] object-cover rounded-lg"
+              className="w-full aspect-4/3 object-cover rounded-lg"
             />
           </div>
 

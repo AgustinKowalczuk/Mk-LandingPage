@@ -3,7 +3,7 @@
 import WhatsAppButton from "@/components/WppButton";
 import Navbar from "@/components/Navbar";
 import { useEffect, useState } from "react";
-import renderContent from "@/utils";
+import { renderContent } from "@/utils";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 
@@ -27,16 +27,9 @@ export default function Home() {
     };
   }, []);
 
-  useEffect(() => {
-    console.log({
-      isOpen,
-      navigateTo,
-    });
-  }, [isOpen, navigateTo]);
-
   return (
     <main>
-      <header className="absolute top-0 left-0 z-50 w-full">
+      <header className="fixed top-0 right-0 z-10 w-full">
         <Navbar
           isOpen={isOpen}
           setIsOpen={setIsOpen}
@@ -44,16 +37,18 @@ export default function Home() {
         />
       </header>
 
-      <div
-        style={{
-          opacity: heroOpacity,
-          transform: `translateY(-${heroTranslate}px)`,
-        }}
-        className="transition-opacity duration-100"
-      >
-        {navigateTo === "/" && <Hero />}
+      <div className="mt-8">
+        <div
+          style={{
+            opacity: heroOpacity,
+            transform: `translateY(-${heroTranslate}px)`,
+          }}
+          className="transition-opacity duration-100"
+        >
+          {navigateTo === "/" && <Hero setNavigateTo={setNavigateTo} />}
+        </div>
+        {renderContent(navigateTo)}
       </div>
-      {renderContent(navigateTo)}
 
       <WhatsAppButton />
 

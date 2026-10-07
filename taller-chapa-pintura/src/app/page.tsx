@@ -2,52 +2,50 @@
 
 import WhatsAppButton from "@/components/WppButton";
 import Navbar from "@/components/Navbar";
-import { useEffect, useState } from "react";
-import { renderContent } from "@/utils";
+import { useState } from "react";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
+import Services from "@/components/Services";
+import Gallery from "@/components/Gallery";
+import About from "@/components/About";
+import Location from "@/components/Location";
+import Contact from "@/components/Contact";
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
-  const [navigateTo, setNavigateTo] = useState("/");
-  const [scrollY, setScrollY] = useState(0);
-
-  const heroOpacity = Math.max(0, 1 - scrollY / 500);
-  const heroTranslate = Math.min(scrollY * 0.5, 150);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   return (
-    <main>
-      <header className="fixed top-0 right-0 z-10 w-full">
-        <Navbar
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          setNavigateTo={setNavigateTo}
-        />
+    <main className="scroll-smooth">
+      {/* NAVBAR */}
+      <header className="fixed top-0 right-0 z-50 w-full">
+        <Navbar isOpen={isOpen} setIsOpen={setIsOpen} />
       </header>
 
-      <div className="mt-8">
-        <div
-          style={{
-            opacity: heroOpacity,
-            transform: `translateY(-${heroTranslate}px)`,
-          }}
-          className="transition-opacity duration-100"
-        >
-          {navigateTo === "/" && <Hero setNavigateTo={setNavigateTo} />}
-        </div>
-        {renderContent(navigateTo)}
+      {/* SECTIONS */}
+      <div>
+        <section id="home" className="min-h-svh scroll-mt-24">
+          <Hero />
+        </section>
+
+        <section id="services" className="min-h-svh scroll-mt-24">
+          <Services />
+        </section>
+
+        <section id="gallery" className="min-h-svh scroll-mt-14">
+          <Gallery />
+        </section>
+
+        <section id="about" className="min-h-svh scroll-mt-14">
+          <About />
+        </section>
+
+        <section id="location" className="min-h-svh scroll-mt-14">
+          <Location />
+        </section>
+
+        <section id="contacto" className="min-h-svh scroll-mt-14">
+          <Contact />
+        </section>
       </div>
 
       <WhatsAppButton />

@@ -1,15 +1,10 @@
 import { workshop } from "@/data/workshop";
 import Link from "next/link";
-import { Dispatch, SetStateAction } from "react";
 const ilustrativeImg = "/images/hero/hero-car.jpg";
 
-const Hero = ({
-  setNavigateTo,
-}: {
-  setNavigateTo: Dispatch<SetStateAction<string>>;
-}) => {
+const Hero = () => {
   const links = {
-    servicesLink: "/#servicios",
+    servicesLink: "#servicios",
     whatsapp: `https://wa.me/${workshop.whatsapp}`,
   };
 
@@ -60,9 +55,6 @@ const Hero = ({
 
             <Link
               href={links.servicesLink}
-              onClick={()=>{
-                setNavigateTo("/#servicios")
-              }}
               className="rounded-lg border border-white/40 bg-white/10 px-7 py-3 text-center font-semibold text-white backdrop-blur-sm transition hover:bg-white/20"
             >
               Ver servicios

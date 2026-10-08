@@ -14,8 +14,8 @@ export default function Navbar({
 
   const componentsSection = [
     { name: "Inicio", id: "home", href: "/#home" },
-    { name: "Services", id: "services", href: "/#services" },
-    { name: "Galleria", id: "gallery", href: "/#gallery" },
+    { name: "Servicios", id: "services", href: "/#services" },
+    { name: "Galeria", id: "gallery", href: "/#gallery" },
     { name: "Nosotros", id: "about", href: "/#about" },
     { name: "Ubicacion", id: "location", href: "/#location" },
     { name: "Contacto", id: "contacto", href: "/#contacto" },
@@ -94,7 +94,7 @@ export default function Navbar({
 
       {/* NAVIGATION */}
       <ul
-        className={`mr-4 w-full flex-col sm:flex-row gap-4 sm:justify-center ${
+        className={`mr-4 w-full flex-col sm:flex-row gap-4 sm:justify-end ${
           isOpen ? "flex" : "hidden"
         } sm:flex`}
       >

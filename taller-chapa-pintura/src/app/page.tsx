@@ -39,7 +39,7 @@ export default function Home() {
           <About />
         </section>
 
-        <section id="location" className="min-h-svh scroll-mt-14">
+        <section id="location" className="min-h-svh scroll-mt-24">
           <Location />
         </section>
 

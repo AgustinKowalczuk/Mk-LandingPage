@@ -1,7 +1,7 @@
 import config from "@/config/enviroments";
 
 const Location = () => {
-  const address = "Las Malvinas 83, Villa Carlos Paz, Córdoba, Argentina";
+  const address = "Ibsen 83, Villa Carlos Paz, Córdoba, Argentina";
 
   const mapsUrl = config.ADDRESS_URL_LOCAL;
 
@@ -11,63 +11,88 @@ const Location = () => {
         {/* =========================
             INFORMACIÓN
         ========================= */}
-        <div className="flex w-full flex-col justify-center rounded-3xl border border-neutral-800 bg-neutral-900/60 p-7 shadow-xl sm:p-9 lg:w-[40%] lg:p-10">
-          {/* Label */}
+        <div className="flex w-full min-w-0 flex-col justify-center rounded-3xl border border-neutral-800 bg-neutral-900/60 p-5 shadow-xl sm:p-7 lg:w-[40%] lg:p-8 xl:p-10">
+          {/* Encabezado */}
           <div>
-            <span className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-yellow-400">
-              <span className="h-2 w-2 rounded-full bg-yellow-400" />
+            <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-yellow-400 sm:text-sm">
+              <span className="h-2 w-2 shrink-0 rounded-full bg-yellow-400" />
               Encontranos
             </span>
 
-            <h2 className="mt-4 text-4xl font-bold leading-tight text-white sm:text-5xl">
+            <h2 className="mt-4 text-3xl font-bold leading-tight text-white sm:text-4xl xl:text-5xl">
               Estamos cerca
-              <span className="block text-yellow-400">de vos.</span>
+              <span className="block text-yellow-400">tuyo.</span>
             </h2>
 
-            <p className="mt-5 max-w-lg text-base leading-relaxed text-neutral-400 sm:text-lg">
+            <p className="mt-4 max-w-lg text-sm leading-relaxed text-neutral-400 sm:mt-5 sm:text-base lg:text-lg">
               Visitá nuestro taller en Villa Carlos Paz y consultanos por tu
               vehículo. Estamos para ayudarte.
             </p>
           </div>
 
           {/* Información */}
-          <div className="mt-8 flex flex-col gap-6">
+          <div className="mt-7 flex min-w-0 flex-col gap-7 sm:mt-8 sm:gap-8">
             {/* Dirección */}
-            <div className="flex gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-yellow-500/10 text-xl text-yellow-400">
+            <div className="flex min-w-0 items-start gap-3 sm:gap-4">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-yellow-500/10 text-xl text-yellow-400 sm:h-12 sm:w-12">
                 📍
               </div>
 
-              <div className="min-w-0">
+              <div className="min-w-0 flex-1">
                 <h3 className="font-semibold text-white">Dirección</h3>
 
-                <p className="mt-1 text-sm leading-relaxed text-neutral-400 sm:text-base">
+                <p className="mt-1 break-words text-sm leading-relaxed text-neutral-400 sm:text-base">
                   {address}
                 </p>
               </div>
             </div>
 
             {/* Horarios */}
-            <div className="flex gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-yellow-500/10 text-xl text-yellow-400">
+            <div className="flex min-w-0 items-start gap-3 sm:gap-4">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-yellow-500/10 text-xl text-yellow-400 sm:h-12 sm:w-12">
                 🕐
               </div>
 
-              <div className="w-full">
+              <div className="min-w-0 flex-1">
                 <h3 className="font-semibold text-white">Horarios</h3>
-                <div className="flex justify-around w-full">
-                  <p className="mt-1 text-sm leading-relaxed text-neutral-400 sm:text-base">
-                    Lunes a viernes
-                    <br />
-                    08:00 — 13:00
-                    <br />
-                    15:00 — 18:00
-                  </p>
-                  <p className="mt-1 text-sm leading-relaxed text-neutral-400 sm:text-base">
-                    Sabado
-                    <br />
-                    08:00 — 12:00
-                  </p>
+
+                <div className="mt-3 flex flex-col gap-3 sm:grid sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-3">
+                  {/* Lunes a viernes */}
+                  <div className="rounded-xl border border-neutral-800 bg-neutral-950/40 p-3 sm:p-4">
+                    <p className="text-sm font-medium text-neutral-200">
+                      Lunes a viernes
+                    </p>
+
+                    <p className="mt-2 text-sm leading-relaxed text-neutral-400">
+                      08:00 — 13:00
+                      <br />
+                      14:30 — 19:00
+                    </p>
+                  </div>
+
+                  {/* Sábado */}
+                  <div className="rounded-xl border border-neutral-800 bg-neutral-950/40 p-3 sm:p-4">
+                    <p className="text-sm font-medium text-neutral-200">
+                      Sábado
+                    </p>
+
+                    <p className="mt-2 text-sm leading-relaxed text-neutral-400">
+                      08:00 — 13:00
+                      <br />
+                      cerrado
+                    </p>
+                  </div>
+
+                  {/* Domingo */}
+                  <div className="rounded-xl border border-neutral-800 bg-neutral-950/40 p-3 sm:p-4">
+                    <p className="text-sm font-medium text-neutral-200">
+                      Domingo
+                    </p>
+
+                    <p className="mt-2 text-sm leading-relaxed text-neutral-400">
+                      Cerrado
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -75,15 +100,17 @@ const Location = () => {
 
           {/* CTA */}
           <div className="mt-9">
-            <a
-              href={mapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-yellow-500 px-7 py-3.5 font-bold text-neutral-950 transition-all duration-300 hover:bg-yellow-400 hover:shadow-lg hover:shadow-yellow-500/10 sm:w-auto"
-            >
-              Cómo llegar
-              <span aria-hidden="true">↗</span>
-            </a>
+            {mapsUrl && (
+              <a
+                href={mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-yellow-500 px-7 py-3.5 font-bold text-neutral-950 transition-all duration-300 hover:bg-yellow-400 hover:shadow-lg hover:shadow-yellow-500/10 sm:w-auto"
+              >
+                Cómo llegar
+                <span aria-hidden="true">↗</span>
+              </a>
+            )}
           </div>
         </div>
 
@@ -99,7 +126,7 @@ const Location = () => {
               </p>
 
               <p className="mt-0.5 truncate text-xs text-neutral-500">
-                Las Malvinas 83 · Villa Carlos Paz
+                Ibsen 83 · Villa Carlos Paz
               </p>
             </div>
 

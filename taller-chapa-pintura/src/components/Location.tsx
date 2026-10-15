@@ -73,24 +73,11 @@ const Location = () => {
                   {/* Sábado */}
                   <div className="rounded-xl border border-neutral-800 bg-neutral-950/40 p-3 sm:p-4">
                     <p className="text-sm font-medium text-neutral-200">
-                      Sábado
+                      Sábado y Domingo
                     </p>
 
                     <p className="mt-2 text-sm leading-relaxed text-neutral-400">
-                      08:00 — 13:00
-                      <br />
                       cerrado
-                    </p>
-                  </div>
-
-                  {/* Domingo */}
-                  <div className="rounded-xl border border-neutral-800 bg-neutral-950/40 p-3 sm:p-4">
-                    <p className="text-sm font-medium text-neutral-200">
-                      Domingo
-                    </p>
-
-                    <p className="mt-2 text-sm leading-relaxed text-neutral-400">
-                      Cerrado
                     </p>
                   </div>
                 </div>

@@ -1,7 +1,12 @@
-import ContactNotification from "@/emails/templates/ContactNotification";
 import type { ContactEmailData } from "@/emails/types";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+//plantillas
+import ContactNotification from "@/emails/templates/ContactNotification";
+import BudgetNotification from "@/emails/templates/BudgetNotification";
+import RestorationNotification from "@/emails/templates/RestorationNotification";
+import WarrantyNotification from "@/emails/templates/WarrantyNotification";
+import ClaimNotification from "@/emails/templates/ClaimNotification";
 
 const URGENCY_BY_SUBJECT: Record<string, string> = {
   presupuesto: "no tan urgente",
@@ -110,12 +115,29 @@ export async function POST(request: Request) {
 
     const resend = new Resend(apiKey);
 
+    const templateBySubject = {
+      presupuesto: BudgetNotification,
+      restauracion: RestorationNotification,
+      "garantia del trabajo": WarrantyNotification,
+      "reclamos en general": ClaimNotification,
+    };
+
+    const EmailTemplate =
+      templateBySubject[asunto as keyof typeof templateBySubject];
+
+    const subjectLabels: Record<string, string> = {
+      presupuesto: "Presupuesto",
+      restauracion: "Restauración",
+      "garantia del trabajo": "Garantía del trabajo",
+      "reclamos en general": "Reclamo general",
+    };
+
     const { data, error } = await resend.emails.send({
       from,
       to: [to],
       replyTo: email,
-      subject: `Nuevo contacto MK Cars: ${asunto}`,
-      react: ContactNotification({ contact }),
+      subject: `MK Cars | ${subjectLabels[asunto]}`,
+      react: EmailTemplate({ contact }),
     });
 
     if (error) {

@@ -7,6 +7,8 @@ import BudgetNotification from "@/emails/templates/BudgetNotification";
 import RestorationNotification from "@/emails/templates/RestorationNotification";
 import WarrantyNotification from "@/emails/templates/WarrantyNotification";
 import ClaimNotification from "@/emails/templates/ClaimNotification";
+//libs
+import { contactRateLimit } from "@/lib/rate-limit";
 
 const URGENCY_BY_SUBJECT: Record<string, string> = {
   presupuesto: "no tan urgente",
@@ -34,6 +36,35 @@ export async function POST(request: Request) {
   }
 
   try {
+    const forwardedFor = request.headers.get("x-forwarded-for");
+    const ip =
+      request.headers.get("x-real-ip") || forwardedFor?.split(",")[0]?.trim();
+
+    if (!ip) {
+      return NextResponse.json(
+        { error: "No se pudo procesar la solicitud." },
+        { status: 400 },
+      );
+    }
+
+    const { success, reset } = await contactRateLimit.limit(ip);
+
+    if (!success) {
+      const retryAfter = Math.max(1, Math.ceil((reset - Date.now()) / 1000));
+
+      return NextResponse.json(
+        {
+          error: "Enviaste demasiadas consultas. Intentá nuevamente más tarde.",
+          retryAfter,
+        },
+        {
+          status: 429,
+          headers: {
+            "Retry-After": String(retryAfter),
+          },
+        },
+      );
+    }
     const body: unknown = await request.json();
 
     if (!body || typeof body !== "object" || Array.isArray(body)) {
@@ -45,6 +76,14 @@ export async function POST(request: Request) {
 
     const payload = body as Record<string, unknown>;
 
+    // Protección honeypot: rechazar bots que completan el campo oculto.
+    if (cleanString(payload.website)) {
+      return NextResponse.json(
+        { error: "Solicitud no válida." },
+        { status: 400 },
+      );
+    }
+
     const fullName = cleanString(payload.fullName);
     const email = cleanString(payload.email).toLowerCase();
     const phoneNumber = cleanString(payload.phoneNumber);
@@ -52,7 +91,6 @@ export async function POST(request: Request) {
     const asunto = cleanString(payload.asunto).toLowerCase();
     const DNI = cleanString(payload.DNI);
     const date = cleanString(payload.date);
-
     const errors: Record<string, string> = {};
 
     if (fullName.length < 2 || fullName.length > 100) {

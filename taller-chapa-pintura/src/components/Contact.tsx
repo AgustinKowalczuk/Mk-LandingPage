@@ -1,17 +1,10 @@
+
 "use client";
 
-import { useState } from "react";
+import { ApiResponse, ContactFormData } from "@/types";
+import { useEffect, useRef, useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
 
-type ContactFormData = {
-  fullName: string;
-  email: string;
-  phoneNumber: string;
-  text: string;
-  asunto: string;
-  DNI: string;
-  date: string;
-};
 
 const INITIAL_FORM: ContactFormData = {
   fullName: "",
@@ -26,10 +19,26 @@ const INITIAL_FORM: ContactFormData = {
 const Contact = () => {
   const [form, setForm] = useState<ContactFormData>(INITIAL_FORM);
   const [loading, setLoading] = useState(false);
+  const [minDate, setMinDate] = useState("");
   const [status, setStatus] = useState<{
     type: "success" | "error";
     message: string;
   } | null>(null);
+
+  // Evita solicitudes duplicadas antes de que React actualice el estado.
+  const isSubmitting = useRef(false);
+
+  useEffect(() => {
+    const today = new Date();
+
+    const localDate = [
+      today.getFullYear(),
+      String(today.getMonth() + 1).padStart(2, "0"),
+      String(today.getDate()).padStart(2, "0"),
+    ].join("-");
+
+    setMinDate(localDate);
+  }, []);
 
   const isBudget = form.asunto === "presupuesto";
 
@@ -51,12 +60,15 @@ const Contact = () => {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const formData = new FormData(event.currentTarget);
+    if (isSubmitting.current) return;
 
+    isSubmitting.current = true;
     setLoading(true);
     setStatus(null);
 
     try {
+      const formData = new FormData(event.currentTarget);
+
       const payload = {
         fullName: form.fullName,
         email: form.email,
@@ -75,15 +87,20 @@ const Contact = () => {
         body: JSON.stringify(payload),
       });
 
-      const result = await response.json();
+      // El servidor podría responder con algo que no sea JSON.
+      const result = (await response.json().catch(() => null)) as
+        | ApiResponse
+        | null;
 
-      if (!response.ok) {
-        const fieldErrors = result.fields
-          ? Object.values(result.fields as Record<string, string>).join(" ")
+      if (!response.ok || result?.success !== true) {
+        const fieldErrors = result?.fields
+          ? Object.values(result.fields).join(" ")
           : "";
 
         throw new Error(
-          fieldErrors || result.error || "No se pudo enviar la consulta.",
+          fieldErrors ||
+            result?.error ||
+            "No se pudo enviar la consulta. Intentá nuevamente.",
         );
       }
 
@@ -97,11 +114,14 @@ const Contact = () => {
       setStatus({
         type: "error",
         message:
-          error instanceof Error
-            ? error.message
-            : "Ocurrió un error. Intentá nuevamente.",
+          error instanceof TypeError
+            ? "No pudimos conectar con el servidor. Revisá tu conexión e intentá nuevamente."
+            : error instanceof Error
+              ? error.message
+              : "Ocurrió un error inesperado. Intentá nuevamente.",
       });
     } finally {
+      isSubmitting.current = false;
       setLoading(false);
     }
   };
@@ -131,8 +151,10 @@ const Contact = () => {
 
         <form
           onSubmit={handleSubmit}
+          aria-busy={loading}
           className="flex flex-col gap-5 rounded-3xl border border-neutral-800 bg-neutral-900/60 p-5 shadow-xl sm:p-8"
         >
+          {/* Honeypot: campo oculto para detectar bots. */}
           <div
             aria-hidden="true"
             className="absolute -left-[10000px] h-px w-px overflow-hidden"
@@ -146,6 +168,7 @@ const Contact = () => {
               autoComplete="off"
             />
           </div>
+
           <div className="flex flex-col gap-5 sm:flex-row">
             <div className="flex min-w-0 flex-1 flex-col">
               <label className={labelClass} htmlFor="fullName">
@@ -177,6 +200,7 @@ const Contact = () => {
                 autoComplete="tel"
                 value={form.phoneNumber}
                 onChange={handleChange}
+                minLength={6}
                 maxLength={30}
                 required
                 placeholder="+54 9 ..."
@@ -216,7 +240,9 @@ const Contact = () => {
             >
               <option value="presupuesto">Presupuesto</option>
               <option value="restauracion">Restauración</option>
-              <option value="garantia del trabajo">Garantía del trabajo</option>
+              <option value="garantia del trabajo">
+                Garantía del trabajo
+              </option>
               <option value="reclamos en general">Reclamos en general</option>
             </select>
           </div>
@@ -224,9 +250,9 @@ const Contact = () => {
           {isBudget && (
             <div className="flex flex-col gap-5 rounded-2xl border border-yellow-400/20 bg-yellow-400/5 p-4 sm:p-5">
               <p className="text-sm leading-6 text-neutral-300">
-                Para solicitar un presupuesto, completá tus datos para coordinar
-                una visita. La fecha es una preferencia, no una confirmación del
-                turno.
+                Para solicitar un presupuesto, completá tus datos para
+                coordinar una visita. La fecha es una preferencia, no una
+                confirmación del turno.
               </p>
 
               <div className="flex flex-col">
@@ -256,7 +282,7 @@ const Contact = () => {
                   id="date"
                   name="date"
                   type="date"
-                  min={new Date().toLocaleDateString("en-CA")}
+                  min={minDate || undefined}
                   value={form.date}
                   onChange={handleChange}
                   required
@@ -287,8 +313,8 @@ const Contact = () => {
 
           {status && (
             <p
-              role="status"
-              aria-live="polite"
+              role={status.type === "error" ? "alert" : "status"}
+              aria-live={status.type === "error" ? "assertive" : "polite"}
               className={`rounded-xl border p-4 text-sm ${
                 status.type === "success"
                   ? "border-green-800 bg-green-950/40 text-green-300"

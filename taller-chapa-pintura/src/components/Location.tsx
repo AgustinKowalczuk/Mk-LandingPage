@@ -1,9 +1,10 @@
+'use client'
 import config from "@/config/enviroments";
 
 const Location = () => {
   const address = "Ibsen 83, Villa Carlos Paz, Córdoba, Argentina";
 
-  const mapsUrl = config.ADDRESS_URL_LOCAL;
+  const mapsUrl = config.NEXT_PUBLIC_ADDRESS_URL_LOCAL;
 
   return (
     <section className="w-full px-4 py-10 sm:px-6 lg:px-8">
@@ -92,9 +93,9 @@ const Location = () => {
                 href={mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-yellow-500 px-7 py-3.5 font-bold text-neutral-950 transition-all duration-300 hover:bg-yellow-400 hover:shadow-lg hover:shadow-yellow-500/10 sm:w-auto"
+                className="inline-flex items-center gap-2"
               >
-                Cómo llegar
+                <span>Cómo llegar</span>
                 <span aria-hidden="true">↗</span>
               </a>
             )}

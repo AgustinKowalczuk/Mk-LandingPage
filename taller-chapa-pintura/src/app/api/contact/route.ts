@@ -2,7 +2,6 @@ import type { ContactEmailData } from "@/emails/types";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 //plantillas
-import ContactNotification from "@/emails/templates/ContactNotification";
 import BudgetNotification from "@/emails/templates/BudgetNotification";
 import RestorationNotification from "@/emails/templates/RestorationNotification";
 import WarrantyNotification from "@/emails/templates/WarrantyNotification";
